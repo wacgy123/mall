@@ -2,7 +2,7 @@
   <swiper :options="swiperOptions">
     <swiper-slide v-for="banner of banners" :key="banner.id">
       <a :href="banner.link">
-        <img class="swiper-img" :src="banner.imgUrl" :alt="banner.title">
+        <img class="swiper-img" :src="banner.imgUrl" :alt="banner.title" @load="imageLoad">
       </a>
     </swiper-slide>
     <template v-slot:pagination>
@@ -41,10 +41,19 @@
           },
           //滑动速度
           speed: 1000,
-        }
+        },
+        isLoad:false
       }
     },
-    components:{Swiper,SwiperSlide}
+    components:{Swiper,SwiperSlide},
+    methods:{
+      imageLoad() {
+        if(!this.isLoad) {
+          this.$emit('swiperImageLoad')
+          this.isLoad=true
+        }
+      }
+    }
   }
 </script>
 
